@@ -2,25 +2,30 @@ import {createSlice} from '@reduxjs/toolkit';
 import {InitialStateType} from '../../interface';
 
 const initialState: InitialStateType = {
-  isLogin: null,
+  isLogin: false,
   registered: [],
+  tempUser: {email: '', password: ''},
 };
 
 //State slice
 export const authSlice = createSlice({
-  name: 'color',
+  name: 'auth',
   initialState,
   reducers: {
     setLogin: (state, {payload}) => {
       state.isLogin = payload;
     },
-    setRegister: (state, {payload}) => {
-      state.registered = [...state.registered, payload];
+    setTempUser: (state, {payload}) => {
+      state.tempUser = payload;
+    },
+    setRegister: state => {
+      state.registered = [...state.registered, state.tempUser];
+      state.tempUser = {email: '', password: ''};
     },
   },
 });
 
 // Action creators are automatically generated for each case reducer function
-export const {setLogin, setRegister} = authSlice.actions;
+export const {setLogin, setRegister, setTempUser} = authSlice.actions;
 
 export default authSlice.reducer;

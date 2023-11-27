@@ -5,10 +5,9 @@ import {
   Text,
   TextInput,
   TouchableOpacity,
-  Alert,
 } from 'react-native';
 import {useDispatch, useSelector} from 'react-redux';
-import {setRegister} from '../../store/reducer';
+import {setTempUser} from '../../store/reducer';
 import {RootState} from '../../store/store';
 
 const Register = ({navigation: {navigate}}: any) => {
@@ -84,10 +83,10 @@ const Register = ({navigation: {navigate}}: any) => {
       setDuplicateEmail(true);
       return;
     }
-    dispatch(setRegister(userData));
-    Alert.alert('Successful', 'Successfully Registered a user', [
-      {text: 'OK', onPress: () => navigate('Otp')},
-    ]);
+    dispatch(setTempUser(userData));
+    setUserData({email: '', password: ''});
+    setErrorData({email: false, password: false});
+    navigate('Otp');
   };
   return (
     <View style={styles.container}>
@@ -121,6 +120,14 @@ const Register = ({navigation: {navigate}}: any) => {
           The email is registered. Please choose another email
         </Text>
       )}
+      <View style={styles.otherContainer}>
+        <Text>Are you Registered? </Text>
+        <TouchableOpacity
+          style={styles.button}
+          onPress={() => navigate('Login')}>
+          <Text>Login</Text>
+        </TouchableOpacity>
+      </View>
     </View>
   );
 };
@@ -161,11 +168,16 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     borderRadius: 12,
     padding: 8,
-    marginTop: 30,
+    marginTop: 20,
   },
   errorText: {
     color: 'red',
     marginTop: 10,
+  },
+  otherContainer: {
+    justifyContent: 'center',
+    alignItems: 'center',
+    marginTop: 20,
   },
 });
 

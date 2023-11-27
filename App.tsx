@@ -12,6 +12,7 @@ const Stack = createNativeStackNavigator();
 
 function App() {
   const isLogin = useSelector((state: RootState) => state.auth.isLogin);
+  console.log(isLogin);
   return (
     <NavigationContainer>
       <Stack.Navigator
